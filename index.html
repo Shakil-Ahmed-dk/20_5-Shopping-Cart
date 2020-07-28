@@ -48,7 +48,7 @@
                            <button class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="casingPrice">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -81,25 +81,35 @@
    <script>
       document.getElementById('iphoneMinusIcon').addEventListener('click',function(){
          console.log('hello minus');
+         var decrease = -1;
+         quantity('phoneQuantity',decrease);
 
 
       })
 
+
       document.getElementById('iphonePlusIcon').addEventListener('click',function(){
          console.log('hello plus');
+         var increase = 1;
 
-         var phoneQuantity = document.getElementById('phoneQuantity').value;
+         quantity('phoneQuantity',increase);
+
+         // console.log(subtotalNumber);
+         // console.log(commaRemoved);
+
+
+      })
+
+      
+      function quantity(id,increaseOrDecrease){
+         var phoneQuantity = document.getElementById(id).value;
          console.log(phoneQuantity); 
          var phoneQuantityNumber = parseFloat(phoneQuantity);
 
-         phoneQuantityNumber = phoneQuantityNumber+1;
-         document.getElementById('phoneQuantity').value = phoneQuantityNumber;
+         phoneQuantityNumber = phoneQuantityNumber + increaseOrDecrease;
+         document.getElementById(id).value = phoneQuantityNumber;
 
-        
-         
-         
          //Phone Price section starts here
-      
          var phonePrice = document.getElementById('phonePrice').innerText; //input field er khetre .value r onno text hole .innerText
          // console.log(phonePrice);
          var phonePriceNumber = parseFloat(phonePrice);
@@ -113,11 +123,20 @@
          var subtotal = document.getElementById('subtotalAmount').innerText;
          var commaRemovedSubtotal = subtotal.replace(/,/g,''); // to remove all commas form the string.
          var subtotalNumber = parseFloat(commaRemovedSubtotal);
-         console.log(subtotalNumber);
-         // console.log(commaRemoved);
+         // si prothon 3 line e subtotal number ta neya hoice
 
+         var casingQuantity = document.getElementById('casingPrice').innerText;
+         var casingQuantityNumber = parseFloat(casingQuantity);
 
-      })
+         //ai 3 line e casing total price ta neya hoice
+
+         var subtotalUpdate = phoneTotalPrice + casingQuantityNumber
+         document.getElementById('subtotalAmount').innerText = subtotalUpdate;
+
+         // ai 2 line e phone and casing price sum kore subtotal update kora hoscce.
+         
+
+         }
 
    </script>
 
