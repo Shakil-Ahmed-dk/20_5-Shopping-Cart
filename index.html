@@ -43,9 +43,9 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default"><i id="casingMinusIcon" class="fas fa-minus"></i></button>
+                           <input id="casingQuantity" type="text" class="form-control text-center" value="1">
+                           <button class="btn btn-default"><i id="casingPlusIcon"  class="fas fa-plus"></i></button>
 
                         </div>
                         <h5>$ <span id="casingPrice">59</span></h5>
@@ -65,8 +65,8 @@
 
                      <div class="col-md-4 status">
                         <h5>$ <span id="subtotalAmount">1,278</span> </h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="tax"> 0</span></h5>
+                        <h5>$ <span id="total">1,278</span></h5>
                      </div>
                   </div>
                </div>
@@ -79,63 +79,76 @@
    </section>
 
    <script>
+      // Phone segment starts from here
       document.getElementById('iphoneMinusIcon').addEventListener('click',function(){
-         console.log('hello minus');
          var decrease = -1;
-         quantity('phoneQuantity',decrease);
-
-
+         var unitPrice = 1219;
+         quantity('phoneQuantity',decrease,'phonePrice',unitPrice);
       })
-
 
       document.getElementById('iphonePlusIcon').addEventListener('click',function(){
-         console.log('hello plus');
          var increase = 1;
+         var unitPrice = 1219;
+         quantity('phoneQuantity',increase,'phonePrice',unitPrice);
+      })
+       // Phone segment ends  here
 
-         quantity('phoneQuantity',increase);
 
-         // console.log(subtotalNumber);
-         // console.log(commaRemoved);
-
-
+      // Casing segment starts from here
+      document.getElementById('casingMinusIcon').addEventListener('click',function(){
+         var decrease = -1;
+         var unitPrice = 59;
+         quantity('casingQuantity',decrease, 'casingPrice',unitPrice);
       })
 
+      document.getElementById('casingPlusIcon').addEventListener('click',function(){
+         var increase = 1;
+         var unitPrice = 59;
+         quantity('casingQuantity',increase,'casingPrice',unitPrice);
+      })
+
+
+
       
-      function quantity(id,increaseOrDecrease){
+      function quantity(id,increaseOrDecrease,price,unitPrice){
          var phoneQuantity = document.getElementById(id).value;
-         console.log(phoneQuantity); 
+        
          var phoneQuantityNumber = parseFloat(phoneQuantity);
 
          phoneQuantityNumber = phoneQuantityNumber + increaseOrDecrease;
          document.getElementById(id).value = phoneQuantityNumber;
 
          //Phone Price section starts here
-         var phonePrice = document.getElementById('phonePrice').innerText; //input field er khetre .value r onno text hole .innerText
-         // console.log(phonePrice);
+         var phonePrice = document.getElementById(price).innerText; //input field er khetre .value r onno text hole .innerText
          var phonePriceNumber = parseFloat(phonePrice);
-         console.log(phonePriceNumber);
 
-          var phoneTotalPrice = 1219 * phoneQuantityNumber;
-         document.getElementById('phonePrice').innerText = phoneTotalPrice;
+         var phoneTotalPrice = unitPrice * phoneQuantityNumber;
+         document.getElementById(price).innerText = phoneTotalPrice;   
+
 
          //subtotal section starts here
-
-         var subtotal = document.getElementById('subtotalAmount').innerText;
-         var commaRemovedSubtotal = subtotal.replace(/,/g,''); // to remove all commas form the string.
-         var subtotalNumber = parseFloat(commaRemovedSubtotal);
-         // si prothon 3 line e subtotal number ta neya hoice
+         var phoneQuantity = document.getElementById('phonePrice').innerText;
+         var phoneQuantityNumber = parseFloat(phoneQuantity);
 
          var casingQuantity = document.getElementById('casingPrice').innerText;
          var casingQuantityNumber = parseFloat(casingQuantity);
 
-         //ai 3 line e casing total price ta neya hoice
+         var subtotalUpdate = phoneQuantityNumber + casingQuantityNumber;
 
-         var subtotalUpdate = phoneTotalPrice + casingQuantityNumber
          document.getElementById('subtotalAmount').innerText = subtotalUpdate;
 
-         // ai 2 line e phone and casing price sum kore subtotal update kora hoscce.
-         
+         var tax = document.getElementById('tax').innerText;
+         var taxNumber = parseFloat(tax);
 
+         var taxFinal = subtotalUpdate + taxNumber;
+
+         document.getElementById('total').innerText = taxFinal;
+
+
+         // var subtotal = document.getElementById('subtotalAmount').innerText;
+         // var commaRemovedSubtotal = subtotal.replace(/,/g,''); // to remove all commas form the string.
+   
+      
          }
 
    </script>
